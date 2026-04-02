@@ -9,6 +9,15 @@ export type Body_login_login_access_token = {
     client_secret?: (string | null);
 };
 
+/**
+ * Schema nhẹ cho category khi lồng trong Product response.
+ */
+export type CategoryInProduct = {
+    id: string;
+    name: string;
+    description?: (string | null);
+};
+
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
@@ -52,9 +61,327 @@ export type PrivateUserCreate = {
     is_verified?: boolean;
 };
 
+export type ProductCategoriesPublic = {
+    data: Array<ProductCategoryPublic>;
+    count: number;
+};
+
+export type ProductCategoryCreate = {
+    /**
+     * Tên danh mục
+     */
+    name: string;
+    /**
+     * Màu sắc
+     */
+    color?: (string | null);
+    /**
+     * Hình ảnh
+     */
+    image?: (string | null);
+    /**
+     * Mô tả
+     */
+    description?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type ProductCategoryPublic = {
+    /**
+     * Tên danh mục
+     */
+    name: string;
+    /**
+     * Màu sắc
+     */
+    color?: (string | null);
+    /**
+     * Hình ảnh
+     */
+    image?: (string | null);
+    /**
+     * Mô tả
+     */
+    description?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+};
+
+export type ProductCategoryUpdate = {
+    name?: (string | null);
+    color?: (string | null);
+    image?: (string | null);
+    description?: (string | null);
+    is_archived?: (boolean | null);
+};
+
+export type ProductCreate = {
+    /**
+     * Tên sản phẩm
+     */
+    name: string;
+    /**
+     * Mã sản phẩm
+     */
+    sku: string;
+    /**
+     * Hình ảnh
+     */
+    image?: string;
+    /**
+     * Loại sản phẩm (consu: hàng hoá, service: dịch vụ, combo: bộ)
+     */
+    type?: 'consu' | 'service' | 'combo';
+    /**
+     * Mô tả
+     */
+    description?: (string | null);
+    /**
+     * Đơn vị tính chính
+     */
+    uom_id?: (string | null);
+    /**
+     * Giá bán
+     */
+    price?: number;
+    /**
+     * Giá vốn
+     */
+    cost?: number;
+    /**
+     * VAT bán ra (%)
+     */
+    vat_sale?: number;
+    /**
+     * VAT mua vào (%)
+     */
+    vat_purchase?: number;
+    /**
+     * Có thể mua
+     */
+    is_purchase?: boolean;
+    /**
+     * Có thể bán
+     */
+    is_sale?: boolean;
+    /**
+     * Dùng để sản xuất
+     */
+    is_manufacture?: boolean;
+    /**
+     * Theo dõi tồn kho
+     */
+    is_storable?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    /**
+     * Danh sách ID danh mục
+     */
+    category_ids?: Array<(string)>;
+    /**
+     * Danh sách ID đơn vị phụ
+     */
+    uom_ids?: Array<(string)>;
+};
+
+/**
+ * Loại sản phẩm (consu: hàng hoá, service: dịch vụ, combo: bộ)
+ */
+export type type = 'consu' | 'service' | 'combo';
+
+export type ProductPublic = {
+    /**
+     * Tên sản phẩm
+     */
+    name: string;
+    /**
+     * Mã sản phẩm
+     */
+    sku: string;
+    /**
+     * Hình ảnh
+     */
+    image?: string;
+    /**
+     * Loại sản phẩm (consu: hàng hoá, service: dịch vụ, combo: bộ)
+     */
+    type?: 'consu' | 'service' | 'combo';
+    /**
+     * Mô tả
+     */
+    description?: (string | null);
+    /**
+     * Đơn vị tính chính
+     */
+    uom_id?: (string | null);
+    /**
+     * Giá bán
+     */
+    price?: number;
+    /**
+     * Giá vốn
+     */
+    cost?: number;
+    /**
+     * VAT bán ra (%)
+     */
+    vat_sale?: number;
+    /**
+     * VAT mua vào (%)
+     */
+    vat_purchase?: number;
+    /**
+     * Có thể mua
+     */
+    is_purchase?: boolean;
+    /**
+     * Có thể bán
+     */
+    is_sale?: boolean;
+    /**
+     * Dùng để sản xuất
+     */
+    is_manufacture?: boolean;
+    /**
+     * Theo dõi tồn kho
+     */
+    is_storable?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+    categories?: Array<CategoryInProduct>;
+    uom?: (UomPublic | null);
+    uoms?: Array<UomPublic>;
+};
+
+export type ProductsPublic = {
+    data: Array<ProductPublic>;
+    count: number;
+};
+
+export type ProductUpdate = {
+    name?: (string | null);
+    sku?: (string | null);
+    image?: (string | null);
+    type?: ('consu' | 'service' | 'combo' | null);
+    description?: (string | null);
+    uom_id?: (string | null);
+    price?: (number | null);
+    cost?: (number | null);
+    vat_sale?: (number | null);
+    vat_purchase?: (number | null);
+    is_purchase?: (boolean | null);
+    is_sale?: (boolean | null);
+    is_manufacture?: (boolean | null);
+    is_storable?: (boolean | null);
+    is_archived?: (boolean | null);
+    category_ids?: (Array<(string)> | null);
+    /**
+     * Danh sách đơn vị phụ
+     */
+    uom_ids?: (Array<(string)> | null);
+};
+
 export type Token = {
     access_token: string;
     token_type?: string;
+};
+
+export type UomBase = {
+    /**
+     * Mã đơn vị (VD: kg, lit, cai)
+     */
+    code: string;
+    /**
+     * Tên đơn vị tính
+     */
+    name: string;
+    /**
+     * Hệ số quy đổi
+     */
+    relative_factor?: number;
+    /**
+     * Đơn vị quy đổi
+     */
+    relative_uom_id?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type UomCreate = {
+    /**
+     * Mã đơn vị (VD: kg, lit, cai)
+     */
+    code: string;
+    /**
+     * Tên đơn vị tính
+     */
+    name: string;
+    /**
+     * Hệ số quy đổi
+     */
+    relative_factor?: number;
+    /**
+     * Đơn vị quy đổi
+     */
+    relative_uom_id?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type UomPublic = {
+    /**
+     * Mã đơn vị (VD: kg, lit, cai)
+     */
+    code: string;
+    /**
+     * Tên đơn vị tính
+     */
+    name: string;
+    /**
+     * Hệ số quy đổi
+     */
+    relative_factor?: number;
+    /**
+     * Đơn vị quy đổi
+     */
+    relative_uom_id?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+    base_uom?: (UomBase | null);
+};
+
+export type UomsPublic = {
+    data: Array<UomPublic>;
+    count: number;
+};
+
+export type UomUpdate = {
+    code?: (string | null);
+    name?: (string | null);
+    relative_factor?: (number | null);
+    relative_uom_id?: (string | null);
+    is_archived?: (boolean | null);
 };
 
 export type UpdatePassword = {
@@ -176,6 +503,105 @@ export type PrivateCreateUserData = {
 };
 
 export type PrivateCreateUserResponse = (UserPublic);
+
+export type ProductCategoriesReadCategoriesData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type ProductCategoriesReadCategoriesResponse = (ProductCategoriesPublic);
+
+export type ProductCategoriesCreateCategoryData = {
+    requestBody: ProductCategoryCreate;
+};
+
+export type ProductCategoriesCreateCategoryResponse = (ProductCategoryPublic);
+
+export type ProductCategoriesReadCategoryData = {
+    id: string;
+};
+
+export type ProductCategoriesReadCategoryResponse = (ProductCategoryPublic);
+
+export type ProductCategoriesUpdateCategoryData = {
+    id: string;
+    requestBody: ProductCategoryUpdate;
+};
+
+export type ProductCategoriesUpdateCategoryResponse = (ProductCategoryPublic);
+
+export type ProductCategoriesDeleteCategoryData = {
+    id: string;
+};
+
+export type ProductCategoriesDeleteCategoryResponse = (Message);
+
+export type ProductsReadProductsData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type ProductsReadProductsResponse = (ProductsPublic);
+
+export type ProductsCreateProductData = {
+    requestBody: ProductCreate;
+};
+
+export type ProductsCreateProductResponse = (ProductPublic);
+
+export type ProductsReadProductData = {
+    id: string;
+};
+
+export type ProductsReadProductResponse = (ProductPublic);
+
+export type ProductsUpdateProductData = {
+    id: string;
+    requestBody: ProductUpdate;
+};
+
+export type ProductsUpdateProductResponse = (ProductPublic);
+
+export type ProductsDeleteProductData = {
+    id: string;
+};
+
+export type ProductsDeleteProductResponse = (Message);
+
+export type UomsReadUomsData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type UomsReadUomsResponse = (UomsPublic);
+
+export type UomsCreateUomData = {
+    requestBody: UomCreate;
+};
+
+export type UomsCreateUomResponse = (UomPublic);
+
+export type UomsReadUomData = {
+    id: string;
+};
+
+export type UomsReadUomResponse = (UomPublic);
+
+export type UomsUpdateUomData = {
+    id: string;
+    requestBody: UomUpdate;
+};
+
+export type UomsUpdateUomResponse = (UomPublic);
+
+export type UomsDeleteUomData = {
+    id: string;
+};
+
+export type UomsDeleteUomResponse = (Message);
 
 export type UsersReadUsersData = {
     limit?: number;

@@ -55,6 +55,10 @@ services:
     ports:
       - "8080:8080"
 
+  prestart:
+    volumes:
+      - ./backend:/app/backend
+
   backend:
     restart: "no"
     ports:
@@ -78,8 +82,8 @@ services:
             - .venv
         - path: ./backend/pyproject.toml
           action: rebuild
-    # TODO: remove once coverage is done locally
     volumes:
+      - ./backend:/app/backend
       - ./backend/htmlcov:/app/backend/htmlcov
     environment:
       SMTP_HOST: "mailcatcher"

@@ -57,6 +57,35 @@ export const Body_login_login_access_tokenSchema = {
     title: 'Body_login-login_access_token'
 } as const;
 
+export const CategoryInProductSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name'],
+    title: 'CategoryInProduct',
+    description: 'Schema nhẹ cho category khi lồng trong Product response.'
+} as const;
+
 export const HTTPValidationErrorSchema = {
     properties: {
         detail: {
@@ -251,6 +280,764 @@ export const PrivateUserCreateSchema = {
     title: 'PrivateUserCreate'
 } as const;
 
+export const ProductCategoriesPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ProductCategoryPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'ProductCategoriesPublic'
+} as const;
+
+export const ProductCategoryCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên danh mục'
+        },
+        color: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 7
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Color',
+            description: 'Màu sắc'
+        },
+        image: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image',
+            description: 'Hình ảnh'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description',
+            description: 'Mô tả'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'ProductCategoryCreate'
+} as const;
+
+export const ProductCategoryPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên danh mục'
+        },
+        color: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 7
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Color',
+            description: 'Màu sắc'
+        },
+        image: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image',
+            description: 'Hình ảnh'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description',
+            description: 'Mô tả'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        }
+    },
+    type: 'object',
+    required: ['name', 'id'],
+    title: 'ProductCategoryPublic'
+} as const;
+
+export const ProductCategoryUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        color: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 7
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Color'
+        },
+        image: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'ProductCategoryUpdate'
+} as const;
+
+export const ProductCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên sản phẩm'
+        },
+        sku: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Sku',
+            description: 'Mã sản phẩm'
+        },
+        image: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Image',
+            description: 'Hình ảnh',
+            default: ''
+        },
+        type: {
+            type: 'string',
+            enum: ['consu', 'service', 'combo'],
+            title: 'Type',
+            description: 'Loại sản phẩm (consu: hàng hoá, service: dịch vụ, combo: bộ)',
+            default: 'consu'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description',
+            description: 'Mô tả'
+        },
+        uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Uom Id',
+            description: 'Đơn vị tính chính'
+        },
+        price: {
+            type: 'number',
+            minimum: 0,
+            title: 'Price',
+            description: 'Giá bán',
+            default: 0
+        },
+        cost: {
+            type: 'number',
+            minimum: 0,
+            title: 'Cost',
+            description: 'Giá vốn',
+            default: 0
+        },
+        vat_sale: {
+            type: 'number',
+            minimum: 0,
+            title: 'Vat Sale',
+            description: 'VAT bán ra (%)',
+            default: 0
+        },
+        vat_purchase: {
+            type: 'number',
+            minimum: 0,
+            title: 'Vat Purchase',
+            description: 'VAT mua vào (%)',
+            default: 0
+        },
+        is_purchase: {
+            type: 'boolean',
+            title: 'Is Purchase',
+            description: 'Có thể mua',
+            default: false
+        },
+        is_sale: {
+            type: 'boolean',
+            title: 'Is Sale',
+            description: 'Có thể bán',
+            default: true
+        },
+        is_manufacture: {
+            type: 'boolean',
+            title: 'Is Manufacture',
+            description: 'Dùng để sản xuất',
+            default: false
+        },
+        is_storable: {
+            type: 'boolean',
+            title: 'Is Storable',
+            description: 'Theo dõi tồn kho',
+            default: false
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        category_ids: {
+            items: {
+                type: 'string',
+                format: 'uuid'
+            },
+            type: 'array',
+            title: 'Category Ids',
+            description: 'Danh sách ID danh mục'
+        },
+        uom_ids: {
+            items: {
+                type: 'string',
+                format: 'uuid'
+            },
+            type: 'array',
+            title: 'Uom Ids',
+            description: 'Danh sách ID đơn vị phụ'
+        }
+    },
+    type: 'object',
+    required: ['name', 'sku'],
+    title: 'ProductCreate'
+} as const;
+
+export const ProductPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên sản phẩm'
+        },
+        sku: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Sku',
+            description: 'Mã sản phẩm'
+        },
+        image: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Image',
+            description: 'Hình ảnh',
+            default: ''
+        },
+        type: {
+            type: 'string',
+            enum: ['consu', 'service', 'combo'],
+            title: 'Type',
+            description: 'Loại sản phẩm (consu: hàng hoá, service: dịch vụ, combo: bộ)',
+            default: 'consu'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description',
+            description: 'Mô tả'
+        },
+        uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Uom Id',
+            description: 'Đơn vị tính chính'
+        },
+        price: {
+            type: 'number',
+            minimum: 0,
+            title: 'Price',
+            description: 'Giá bán',
+            default: 0
+        },
+        cost: {
+            type: 'number',
+            minimum: 0,
+            title: 'Cost',
+            description: 'Giá vốn',
+            default: 0
+        },
+        vat_sale: {
+            type: 'number',
+            minimum: 0,
+            title: 'Vat Sale',
+            description: 'VAT bán ra (%)',
+            default: 0
+        },
+        vat_purchase: {
+            type: 'number',
+            minimum: 0,
+            title: 'Vat Purchase',
+            description: 'VAT mua vào (%)',
+            default: 0
+        },
+        is_purchase: {
+            type: 'boolean',
+            title: 'Is Purchase',
+            description: 'Có thể mua',
+            default: false
+        },
+        is_sale: {
+            type: 'boolean',
+            title: 'Is Sale',
+            description: 'Có thể bán',
+            default: true
+        },
+        is_manufacture: {
+            type: 'boolean',
+            title: 'Is Manufacture',
+            description: 'Dùng để sản xuất',
+            default: false
+        },
+        is_storable: {
+            type: 'boolean',
+            title: 'Is Storable',
+            description: 'Theo dõi tồn kho',
+            default: false
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        },
+        categories: {
+            items: {
+                '$ref': '#/components/schemas/CategoryInProduct'
+            },
+            type: 'array',
+            title: 'Categories',
+            default: []
+        },
+        uom: {
+            anyOf: [
+                {
+                    '$ref': '#/components/schemas/UomPublic'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uoms: {
+            items: {
+                '$ref': '#/components/schemas/UomPublic'
+            },
+            type: 'array',
+            title: 'Uoms',
+            default: []
+        }
+    },
+    type: 'object',
+    required: ['name', 'sku', 'id'],
+    title: 'ProductPublic'
+} as const;
+
+export const ProductUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        sku: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Sku'
+        },
+        image: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image'
+        },
+        type: {
+            anyOf: [
+                {
+                    type: 'string',
+                    enum: ['consu', 'service', 'combo']
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Type'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        },
+        uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Uom Id'
+        },
+        price: {
+            anyOf: [
+                {
+                    type: 'number',
+                    minimum: 0
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Price'
+        },
+        cost: {
+            anyOf: [
+                {
+                    type: 'number',
+                    minimum: 0
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Cost'
+        },
+        vat_sale: {
+            anyOf: [
+                {
+                    type: 'number',
+                    minimum: 0
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Vat Sale'
+        },
+        vat_purchase: {
+            anyOf: [
+                {
+                    type: 'number',
+                    minimum: 0
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Vat Purchase'
+        },
+        is_purchase: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Purchase'
+        },
+        is_sale: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Sale'
+        },
+        is_manufacture: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Manufacture'
+        },
+        is_storable: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Storable'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        },
+        category_ids: {
+            anyOf: [
+                {
+                    items: {
+                        type: 'string',
+                        format: 'uuid'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Category Ids'
+        },
+        uom_ids: {
+            anyOf: [
+                {
+                    items: {
+                        type: 'string',
+                        format: 'uuid'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Uom Ids',
+            description: 'Danh sách đơn vị phụ'
+        }
+    },
+    type: 'object',
+    title: 'ProductUpdate'
+} as const;
+
+export const ProductsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/ProductPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'ProductsPublic'
+} as const;
+
 export const TokenSchema = {
     properties: {
         access_token: {
@@ -266,6 +1053,260 @@ export const TokenSchema = {
     type: 'object',
     required: ['access_token'],
     title: 'Token'
+} as const;
+
+export const UomBaseSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            maxLength: 20,
+            title: 'Code',
+            description: 'Mã đơn vị (VD: kg, lit, cai)'
+        },
+        name: {
+            type: 'string',
+            maxLength: 100,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên đơn vị tính'
+        },
+        relative_factor: {
+            type: 'number',
+            minimum: 0,
+            title: 'Relative Factor',
+            description: 'Hệ số quy đổi',
+            default: 1
+        },
+        relative_uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Relative Uom Id',
+            description: 'Đơn vị quy đổi'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['code', 'name'],
+    title: 'UomBase'
+} as const;
+
+export const UomCreateSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            maxLength: 20,
+            title: 'Code',
+            description: 'Mã đơn vị (VD: kg, lit, cai)'
+        },
+        name: {
+            type: 'string',
+            maxLength: 100,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên đơn vị tính'
+        },
+        relative_factor: {
+            type: 'number',
+            minimum: 0,
+            title: 'Relative Factor',
+            description: 'Hệ số quy đổi',
+            default: 1
+        },
+        relative_uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Relative Uom Id',
+            description: 'Đơn vị quy đổi'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['code', 'name'],
+    title: 'UomCreate'
+} as const;
+
+export const UomPublicSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            maxLength: 20,
+            title: 'Code',
+            description: 'Mã đơn vị (VD: kg, lit, cai)'
+        },
+        name: {
+            type: 'string',
+            maxLength: 100,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên đơn vị tính'
+        },
+        relative_factor: {
+            type: 'number',
+            minimum: 0,
+            title: 'Relative Factor',
+            description: 'Hệ số quy đổi',
+            default: 1
+        },
+        relative_uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Relative Uom Id',
+            description: 'Đơn vị quy đổi'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        },
+        base_uom: {
+            anyOf: [
+                {
+                    '$ref': '#/components/schemas/UomBase'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    type: 'object',
+    required: ['code', 'name', 'id'],
+    title: 'UomPublic'
+} as const;
+
+export const UomUpdateSchema = {
+    properties: {
+        code: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 20
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Code'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 100,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        relative_factor: {
+            anyOf: [
+                {
+                    type: 'number',
+                    minimum: 0
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Relative Factor'
+        },
+        relative_uom_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Relative Uom Id'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'UomUpdate'
+} as const;
+
+export const UomsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/UomPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'UomsPublic'
 } as const;
 
 export const UpdatePasswordSchema = {

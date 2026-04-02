@@ -20,6 +20,9 @@ fileConfig(config.config_file_name)
 # target_metadata = None
 
 from app.models import SQLModel  # noqa
+from app.modules.uom import models as uom_models  # noqa
+from app.modules.product_category import models as product_category_models  # noqa
+from app.modules.product import models as product_models  # noqa
 from app.core.config import settings # noqa
 
 target_metadata = SQLModel.metadata
