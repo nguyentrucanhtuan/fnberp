@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProductCategoriesReadCategoriesData, ProductCategoriesReadCategoriesResponse, ProductCategoriesCreateCategoryData, ProductCategoriesCreateCategoryResponse, ProductCategoriesReadCategoryData, ProductCategoriesReadCategoryResponse, ProductCategoriesUpdateCategoryData, ProductCategoriesUpdateCategoryResponse, ProductCategoriesDeleteCategoryData, ProductCategoriesDeleteCategoryResponse, ProductsReadProductsData, ProductsReadProductsResponse, ProductsCreateProductData, ProductsCreateProductResponse, ProductsReadProductData, ProductsReadProductResponse, ProductsUpdateProductData, ProductsUpdateProductResponse, ProductsDeleteProductData, ProductsDeleteProductResponse, UomsReadUomsData, UomsReadUomsResponse, UomsCreateUomData, UomsCreateUomResponse, UomsReadUomData, UomsReadUomResponse, UomsUpdateUomData, UomsUpdateUomResponse, UomsDeleteUomData, UomsDeleteUomResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, KitchenScreensReadScreensData, KitchenScreensReadScreensResponse, KitchenScreensCreateScreenData, KitchenScreensCreateScreenResponse, KitchenScreensReadScreenData, KitchenScreensReadScreenResponse, KitchenScreensUpdateScreenData, KitchenScreensUpdateScreenResponse, KitchenScreensDeleteScreenData, KitchenScreensDeleteScreenResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, OrderTypesReadOrderTypesData, OrderTypesReadOrderTypesResponse, OrderTypesCreateOrderTypeData, OrderTypesCreateOrderTypeResponse, OrderTypesReadOrderTypeData, OrderTypesReadOrderTypeResponse, OrderTypesUpdateOrderTypeData, OrderTypesUpdateOrderTypeResponse, OrderTypesDeleteOrderTypeData, OrderTypesDeleteOrderTypeResponse, PaymentMethodsReadPaymentMethodsData, PaymentMethodsReadPaymentMethodsResponse, PaymentMethodsCreatePaymentMethodData, PaymentMethodsCreatePaymentMethodResponse, PaymentMethodsReadPaymentMethodData, PaymentMethodsReadPaymentMethodResponse, PaymentMethodsUpdatePaymentMethodData, PaymentMethodsUpdatePaymentMethodResponse, PaymentMethodsDeletePaymentMethodData, PaymentMethodsDeletePaymentMethodResponse, PosReadPossData, PosReadPossResponse, PosCreatePosData, PosCreatePosResponse, PosReadPosData, PosReadPosResponse, PosUpdatePosData, PosUpdatePosResponse, PosDeletePosData, PosDeletePosResponse, PrintersReadPrintersData, PrintersReadPrintersResponse, PrintersCreatePrinterData, PrintersCreatePrinterResponse, PrintersReadPrinterData, PrintersReadPrinterResponse, PrintersUpdatePrinterData, PrintersUpdatePrinterResponse, PrintersDeletePrinterData, PrintersDeletePrinterResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProductCategoriesReadCategoriesData, ProductCategoriesReadCategoriesResponse, ProductCategoriesCreateCategoryData, ProductCategoriesCreateCategoryResponse, ProductCategoriesReadCategoryData, ProductCategoriesReadCategoryResponse, ProductCategoriesUpdateCategoryData, ProductCategoriesUpdateCategoryResponse, ProductCategoriesDeleteCategoryData, ProductCategoriesDeleteCategoryResponse, ProductsReadProductsData, ProductsReadProductsResponse, ProductsCreateProductData, ProductsCreateProductResponse, ProductsReadProductData, ProductsReadProductResponse, ProductsUpdateProductData, ProductsUpdateProductResponse, ProductsDeleteProductData, ProductsDeleteProductResponse, UomsReadUomsData, UomsReadUomsResponse, UomsCreateUomData, UomsCreateUomResponse, UomsReadUomData, UomsReadUomResponse, UomsUpdateUomData, UomsUpdateUomResponse, UomsDeleteUomData, UomsDeleteUomResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WarehousesReadWarehousesData, WarehousesReadWarehousesResponse, WarehousesCreateWarehouseData, WarehousesCreateWarehouseResponse, WarehousesReadWarehouseData, WarehousesReadWarehouseResponse, WarehousesUpdateWarehouseData, WarehousesUpdateWarehouseResponse, WarehousesDeleteWarehouseData, WarehousesDeleteWarehouseResponse } from './types.gen';
 
 export class ItemsService {
     /**
@@ -116,6 +116,117 @@ export class ItemsService {
     }
 }
 
+export class KitchenScreensService {
+    /**
+     * Read Screens
+     * Lấy danh sách màn hình nhà bếp.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns KitchenScreensPublic Successful Response
+     * @throws ApiError
+     */
+    public static readScreens(data: KitchenScreensReadScreensData = {}): CancelablePromise<KitchenScreensReadScreensResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/kitchen_screens',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Screen
+     * Tạo màn hình nhà bếp mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns KitchenScreenPublic Successful Response
+     * @throws ApiError
+     */
+    public static createScreen(data: KitchenScreensCreateScreenData): CancelablePromise<KitchenScreensCreateScreenResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/kitchen_screens',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Screen
+     * Lấy thông tin chi tiết một màn hình nhà bếp.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns KitchenScreenPublic Successful Response
+     * @throws ApiError
+     */
+    public static readScreen(data: KitchenScreensReadScreenData): CancelablePromise<KitchenScreensReadScreenResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/kitchen_screens/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Screen
+     * Cập nhật thông tin màn hình nhà bếp.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns KitchenScreenPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateScreen(data: KitchenScreensUpdateScreenData): CancelablePromise<KitchenScreensUpdateScreenResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/kitchen_screens/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Screen
+     * Xoá màn hình nhà bếp.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteScreen(data: KitchenScreensDeleteScreenData): CancelablePromise<KitchenScreensDeleteScreenResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/kitchen_screens/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
 export class LoginService {
     /**
      * Login Access Token
@@ -205,6 +316,456 @@ export class LoginService {
             url: '/api/v1/password-recovery-html-content/{email}',
             path: {
                 email: data.email
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class OrderTypesService {
+    /**
+     * Read Order Types
+     * Lấy danh sách loại đơn hàng.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns OrderTypesPublic Successful Response
+     * @throws ApiError
+     */
+    public static readOrderTypes(data: OrderTypesReadOrderTypesData = {}): CancelablePromise<OrderTypesReadOrderTypesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/order_types',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Order Type
+     * Tạo loại đơn hàng mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns OrderTypePublic Successful Response
+     * @throws ApiError
+     */
+    public static createOrderType(data: OrderTypesCreateOrderTypeData): CancelablePromise<OrderTypesCreateOrderTypeResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/order_types',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Order Type
+     * Lấy thông tin chi tiết của một loại đơn hàng theo ID.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns OrderTypePublic Successful Response
+     * @throws ApiError
+     */
+    public static readOrderType(data: OrderTypesReadOrderTypeData): CancelablePromise<OrderTypesReadOrderTypeResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/order_types/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Order Type
+     * Cập nhật thông tin của một loại đơn hàng.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns OrderTypePublic Successful Response
+     * @throws ApiError
+     */
+    public static updateOrderType(data: OrderTypesUpdateOrderTypeData): CancelablePromise<OrderTypesUpdateOrderTypeResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/order_types/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Order Type
+     * Xoá một loại đơn hàng.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteOrderType(data: OrderTypesDeleteOrderTypeData): CancelablePromise<OrderTypesDeleteOrderTypeResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/order_types/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class PaymentMethodsService {
+    /**
+     * Read Payment Methods
+     * Lấy danh sách phương thức thanh toán.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.includeArchived
+     * @returns PaymentMethodsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPaymentMethods(data: PaymentMethodsReadPaymentMethodsData = {}): CancelablePromise<PaymentMethodsReadPaymentMethodsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/payment-methods/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                include_archived: data.includeArchived
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Payment Method
+     * Tạo phương thức thanh toán mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns PaymentMethodPublic Successful Response
+     * @throws ApiError
+     */
+    public static createPaymentMethod(data: PaymentMethodsCreatePaymentMethodData): CancelablePromise<PaymentMethodsCreatePaymentMethodResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/payment-methods/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Payment Method
+     * Lấy phương thức thanh toán theo ID.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns PaymentMethodPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPaymentMethod(data: PaymentMethodsReadPaymentMethodData): CancelablePromise<PaymentMethodsReadPaymentMethodResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/payment-methods/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Payment Method
+     * Cập nhật phương thức thanh toán.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns PaymentMethodPublic Successful Response
+     * @throws ApiError
+     */
+    public static updatePaymentMethod(data: PaymentMethodsUpdatePaymentMethodData): CancelablePromise<PaymentMethodsUpdatePaymentMethodResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/payment-methods/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Payment Method
+     * Xoá phương thức thanh toán.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deletePaymentMethod(data: PaymentMethodsDeletePaymentMethodData): CancelablePromise<PaymentMethodsDeletePaymentMethodResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/payment-methods/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class PosService {
+    /**
+     * Read Poss
+     * Lấy danh sách quầy bán hàng.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.includeArchived
+     * @returns PossPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPoss(data: PosReadPossData = {}): CancelablePromise<PosReadPossResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/pos/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                include_archived: data.includeArchived
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Pos
+     * Tạo quầy bán hàng mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns PosPublic Successful Response
+     * @throws ApiError
+     */
+    public static createPos(data: PosCreatePosData): CancelablePromise<PosCreatePosResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/pos/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Pos
+     * Lấy quầy bán hàng theo ID.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns PosPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPos(data: PosReadPosData): CancelablePromise<PosReadPosResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/pos/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Pos
+     * Cập nhật quầy bán hàng.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns PosPublic Successful Response
+     * @throws ApiError
+     */
+    public static updatePos(data: PosUpdatePosData): CancelablePromise<PosUpdatePosResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/pos/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Pos
+     * Xoá quầy bán hàng.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deletePos(data: PosDeletePosData): CancelablePromise<PosDeletePosResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/pos/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class PrintersService {
+    /**
+     * Read Printers
+     * Lấy danh sách máy in.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.includeArchived
+     * @returns PrintersPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPrinters(data: PrintersReadPrintersData = {}): CancelablePromise<PrintersReadPrintersResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/printers/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                include_archived: data.includeArchived
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Printer
+     * Tạo máy in mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns PrinterPublic Successful Response
+     * @throws ApiError
+     */
+    public static createPrinter(data: PrintersCreatePrinterData): CancelablePromise<PrintersCreatePrinterResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/printers/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Printer
+     * Lấy máy in theo ID.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns PrinterPublic Successful Response
+     * @throws ApiError
+     */
+    public static readPrinter(data: PrintersReadPrinterData): CancelablePromise<PrintersReadPrinterResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/printers/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Printer
+     * Cập nhật máy in.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns PrinterPublic Successful Response
+     * @throws ApiError
+     */
+    public static updatePrinter(data: PrintersUpdatePrinterData): CancelablePromise<PrintersUpdatePrinterResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/printers/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Printer
+     * Xoá máy in.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deletePrinter(data: PrintersDeletePrinterData): CancelablePromise<PrintersDeletePrinterResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/printers/{id}',
+            path: {
+                id: data.id
             },
             errors: {
                 422: 'Validation Error'
@@ -802,6 +1363,119 @@ export class UtilsService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/utils/health-check/'
+        });
+    }
+}
+
+export class WarehousesService {
+    /**
+     * Read Warehouses
+     * Lấy danh sách kho.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.includeArchived
+     * @returns WarehousesPublic Successful Response
+     * @throws ApiError
+     */
+    public static readWarehouses(data: WarehousesReadWarehousesData = {}): CancelablePromise<WarehousesReadWarehousesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/warehouses/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                include_archived: data.includeArchived
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Warehouse
+     * Tạo kho mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns WarehousePublic Successful Response
+     * @throws ApiError
+     */
+    public static createWarehouse(data: WarehousesCreateWarehouseData): CancelablePromise<WarehousesCreateWarehouseResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/warehouses/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Warehouse
+     * Lấy kho theo ID.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns WarehousePublic Successful Response
+     * @throws ApiError
+     */
+    public static readWarehouse(data: WarehousesReadWarehouseData): CancelablePromise<WarehousesReadWarehouseResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/warehouses/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Warehouse
+     * Cập nhật thông tin kho.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns WarehousePublic Successful Response
+     * @throws ApiError
+     */
+    public static updateWarehouse(data: WarehousesUpdateWarehouseData): CancelablePromise<WarehousesUpdateWarehouseResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/warehouses/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Warehouse
+     * Xoá kho.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteWarehouse(data: WarehousesDeleteWarehouseData): CancelablePromise<WarehousesDeleteWarehouseResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/warehouses/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
         });
     }
 }

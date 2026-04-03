@@ -41,8 +41,8 @@ const DeleteProduct = ({ id, isOpen, setIsOpen }: DeleteProductProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Bạn có chắc chắn muốn xoá?</AlertDialogTitle>
           <AlertDialogDescription>
-            Hành động này không thể hoàn tác. Dữ liệu sản phẩm sẽ bị xoá vĩnh viễn
-            khỏi hệ thống.
+            Hành động này không thể hoàn tác. Dữ liệu sản phẩm sẽ bị xoá vĩnh
+            viễn khỏi hệ thống.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

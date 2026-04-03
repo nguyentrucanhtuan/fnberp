@@ -29,7 +29,9 @@ export const Route = createFileRoute("/_layout/product-categories")({
 })
 
 function ProductCategoriesTableContent() {
-  const { data: categories } = useSuspenseQuery(getProductCategoriesQueryOptions())
+  const { data: categories } = useSuspenseQuery(
+    getProductCategoriesQueryOptions(),
+  )
 
   if (categories.data.length === 0) {
     return (

@@ -57,6 +57,23 @@ export const Body_login_login_access_tokenSchema = {
     title: 'Body_login-login_access_token'
 } as const;
 
+export const CategoryInKitchenScreenSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name'],
+    title: 'CategoryInKitchenScreen'
+} as const;
+
 export const CategoryInProductSchema = {
     properties: {
         id: {
@@ -225,6 +242,181 @@ export const ItemsPublicSchema = {
     title: 'ItemsPublic'
 } as const;
 
+export const KitchenScreenCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên màn hình nhà bếp'
+        },
+        pos_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Pos Id',
+            description: 'POS áp dụng'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Trạng thái hoạt động',
+            default: true
+        },
+        category_ids: {
+            items: {
+                type: 'string',
+                format: 'uuid'
+            },
+            type: 'array',
+            title: 'Category Ids',
+            description: 'Danh mục áp dụng'
+        }
+    },
+    type: 'object',
+    required: ['name', 'pos_id'],
+    title: 'KitchenScreenCreate'
+} as const;
+
+export const KitchenScreenPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên màn hình nhà bếp'
+        },
+        pos_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Pos Id',
+            description: 'POS áp dụng'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Trạng thái hoạt động',
+            default: true
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        },
+        pos: {
+            anyOf: [
+                {
+                    '$ref': '#/components/schemas/PosInKitchenScreen'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        categories: {
+            items: {
+                '$ref': '#/components/schemas/CategoryInKitchenScreen'
+            },
+            type: 'array',
+            title: 'Categories',
+            default: []
+        }
+    },
+    type: 'object',
+    required: ['name', 'pos_id', 'id'],
+    title: 'KitchenScreenPublic'
+} as const;
+
+export const KitchenScreenUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        pos_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'uuid'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Pos Id'
+        },
+        is_active: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Active'
+        },
+        category_ids: {
+            anyOf: [
+                {
+                    items: {
+                        type: 'string',
+                        format: 'uuid'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Category Ids'
+        }
+    },
+    type: 'object',
+    title: 'KitchenScreenUpdate'
+} as const;
+
+export const KitchenScreensPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/KitchenScreenPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'KitchenScreensPublic'
+} as const;
+
 export const MessageSchema = {
     properties: {
         message: {
@@ -253,6 +445,666 @@ export const NewPasswordSchema = {
     type: 'object',
     required: ['token', 'new_password'],
     title: 'NewPassword'
+} as const;
+
+export const OrderTypeCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên loại đơn hàng (Ví dụ: Mang đi, Tại chỗ, Grab...)'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Trạng thái hoạt động',
+            default: true
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'OrderTypeCreate'
+} as const;
+
+export const OrderTypePublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên loại đơn hàng (Ví dụ: Mang đi, Tại chỗ, Grab...)'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Trạng thái hoạt động',
+            default: true
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        }
+    },
+    type: 'object',
+    required: ['name', 'id'],
+    title: 'OrderTypePublic'
+} as const;
+
+export const OrderTypeUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        is_active: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Active'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'OrderTypeUpdate'
+} as const;
+
+export const OrderTypesPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/OrderTypePublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'OrderTypesPublic'
+} as const;
+
+export const PaymentMethodCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên phương thức thanh toán'
+        },
+        code: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 1,
+            title: 'Code',
+            description: 'Mã phương thức thanh toán'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['name', 'code'],
+    title: 'PaymentMethodCreate'
+} as const;
+
+export const PaymentMethodInPosSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        code: {
+            type: 'string',
+            title: 'Code'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name', 'code'],
+    title: 'PaymentMethodInPos'
+} as const;
+
+export const PaymentMethodPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên phương thức thanh toán'
+        },
+        code: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 1,
+            title: 'Code',
+            description: 'Mã phương thức thanh toán'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        }
+    },
+    type: 'object',
+    required: ['name', 'code', 'id'],
+    title: 'PaymentMethodPublic'
+} as const;
+
+export const PaymentMethodUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        code: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 50,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Code'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'PaymentMethodUpdate'
+} as const;
+
+export const PaymentMethodsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/PaymentMethodPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'PaymentMethodsPublic'
+} as const;
+
+export const PosCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên quầy bán hàng'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        payment_method_ids: {
+            items: {
+                type: 'string',
+                format: 'uuid'
+            },
+            type: 'array',
+            title: 'Payment Method Ids'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'PosCreate'
+} as const;
+
+export const PosInKitchenScreenSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name'],
+    title: 'PosInKitchenScreen'
+} as const;
+
+export const PosPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên quầy bán hàng'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        },
+        payment_methods: {
+            items: {
+                '$ref': '#/components/schemas/PaymentMethodInPos'
+            },
+            type: 'array',
+            title: 'Payment Methods',
+            default: []
+        }
+    },
+    type: 'object',
+    required: ['name', 'id'],
+    title: 'PosPublic'
+} as const;
+
+export const PosUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        },
+        payment_method_ids: {
+            anyOf: [
+                {
+                    items: {
+                        type: 'string',
+                        format: 'uuid'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Payment Method Ids'
+        }
+    },
+    type: 'object',
+    title: 'PosUpdate'
+} as const;
+
+export const PossPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/PosPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'PossPublic'
+} as const;
+
+export const PrinterCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên thiết bị máy in'
+        },
+        ip: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Ip',
+            description: 'Địa chỉ IP máy in'
+        },
+        port: {
+            type: 'integer',
+            maximum: 65535,
+            minimum: 1,
+            title: 'Port',
+            description: 'Cổng kết nối',
+            default: 9100
+        },
+        printer_type: {
+            type: 'string',
+            enum: ['invoice', 'label', 'kitchen_order_ticket'],
+            title: 'Printer Type',
+            description: 'Loại máy in',
+            default: 'invoice'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Máy in đang hoạt động',
+            default: true
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['name', 'ip'],
+    title: 'PrinterCreate'
+} as const;
+
+export const PrinterPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên thiết bị máy in'
+        },
+        ip: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Ip',
+            description: 'Địa chỉ IP máy in'
+        },
+        port: {
+            type: 'integer',
+            maximum: 65535,
+            minimum: 1,
+            title: 'Port',
+            description: 'Cổng kết nối',
+            default: 9100
+        },
+        printer_type: {
+            type: 'string',
+            enum: ['invoice', 'label', 'kitchen_order_ticket'],
+            title: 'Printer Type',
+            description: 'Loại máy in',
+            default: 'invoice'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            description: 'Máy in đang hoạt động',
+            default: true
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        }
+    },
+    type: 'object',
+    required: ['name', 'ip', 'id'],
+    title: 'PrinterPublic'
+} as const;
+
+export const PrinterUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        ip: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ip'
+        },
+        port: {
+            anyOf: [
+                {
+                    type: 'integer',
+                    maximum: 65535,
+                    minimum: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Port'
+        },
+        printer_type: {
+            anyOf: [
+                {
+                    type: 'string',
+                    enum: ['invoice', 'label', 'kitchen_order_ticket']
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Printer Type'
+        },
+        is_active: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Active'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'PrinterUpdate'
+} as const;
+
+export const PrintersPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/PrinterPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'PrintersPublic'
 } as const;
 
 export const PrivateUserCreateSchema = {
@@ -1597,4 +2449,175 @@ export const ValidationErrorSchema = {
     type: 'object',
     required: ['loc', 'msg', 'type'],
     title: 'ValidationError'
+} as const;
+
+export const WarehouseCreateSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            maxLength: 20,
+            title: 'Code',
+            description: 'Mã kho (VD: KHO01, WH-HCM)'
+        },
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên kho'
+        },
+        address: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Address',
+            description: 'Địa chỉ kho'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        }
+    },
+    type: 'object',
+    required: ['code', 'name'],
+    title: 'WarehouseCreate'
+} as const;
+
+export const WarehousePublicSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            maxLength: 20,
+            title: 'Code',
+            description: 'Mã kho (VD: KHO01, WH-HCM)'
+        },
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name',
+            description: 'Tên kho'
+        },
+        address: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Address',
+            description: 'Địa chỉ kho'
+        },
+        is_archived: {
+            type: 'boolean',
+            title: 'Is Archived',
+            description: 'Lưu trữ',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        }
+    },
+    type: 'object',
+    required: ['code', 'name', 'id'],
+    title: 'WarehousePublic'
+} as const;
+
+export const WarehouseUpdateSchema = {
+    properties: {
+        code: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 20
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Code'
+        },
+        name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        address: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 500
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Address'
+        },
+        is_archived: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Is Archived'
+        }
+    },
+    type: 'object',
+    title: 'WarehouseUpdate'
+} as const;
+
+export const WarehousesPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                '$ref': '#/components/schemas/WarehousePublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['data', 'count'],
+    title: 'WarehousesPublic'
 } as const;

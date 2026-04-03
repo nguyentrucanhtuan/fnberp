@@ -41,7 +41,8 @@ const DeleteCategory = ({ id, isOpen, setIsOpen }: DeleteCategoryProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Bạn có chắc chắn muốn xoá?</AlertDialogTitle>
           <AlertDialogDescription>
-            Hành động này không thể hoàn tác. Danh mục này sẽ bị xoá vĩnh viễn khỏi hệ thống.
+            Hành động này không thể hoàn tác. Danh mục này sẽ bị xoá vĩnh viễn
+            khỏi hệ thống.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

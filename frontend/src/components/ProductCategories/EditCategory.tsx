@@ -90,7 +90,10 @@ const EditCategory = ({ category, isOpen, setIsOpen }: EditCategoryProps) => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit as any)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control as any}
               name="name"
@@ -112,8 +115,12 @@ const EditCategory = ({ category, isOpen, setIsOpen }: EditCategoryProps) => {
                   <FormLabel>Màu sắc đại diện</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
-                       <Input type="color" className="p-1 h-9 w-12" {...field} />
-                       <Input placeholder="#000000" className="flex-1" {...field} />
+                      <Input type="color" className="p-1 h-9 w-12" {...field} />
+                      <Input
+                        placeholder="#000000"
+                        className="flex-1"
+                        {...field}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -127,7 +134,10 @@ const EditCategory = ({ category, isOpen, setIsOpen }: EditCategoryProps) => {
                 <FormItem>
                   <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Input placeholder="Các loại cà phê pha bằng máy..." {...field} />
+                    <Input
+                      placeholder="Các loại cà phê pha bằng máy..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -154,7 +164,11 @@ const EditCategory = ({ category, isOpen, setIsOpen }: EditCategoryProps) => {
               />
             </div>
             <DialogFooter className="pt-4 gap-2">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
                 Hủy
               </Button>
               <LoadingButton

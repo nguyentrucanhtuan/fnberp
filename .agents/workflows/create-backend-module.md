@@ -60,13 +60,30 @@ Mỗi module cần tối thiểu **5 class** (truy vết từ Item trong `app/mo
 ```python
 import uuid
 from datetime import datetime, timezone
+from typing import Literal, TYPE_CHECKING
 
-from sqlalchemy import DateTime
+from pydantic import ConfigDict  # ★ KHÔNG QUÊN import ConfigDict
+from sqlalchemy import Column, DateTime, ForeignKey, Table
+from sqlalchemy import Enum as SaEnum
+from sqlalchemy.orm import relationship as sa_relationship
 from sqlmodel import Field, Relationship, SQLModel
+
+if TYPE_CHECKING:
+    from app.modules.uom.models import Uom  # Tránh circular import
 
 
 def get_datetime_utc() -> datetime:
     return datetime.now(timezone.utc)
+
+
+# ── Junction Table (N-N) ──
+# Dùng khi 2 bảng có quan hệ nhiều-nhiều
+product_category_link = Table(
+    "product_category_link",
+    SQLModel.metadata,
+    Column("product_id", ForeignKey("products.id", ondelete="CASCADE"), primary_key=True),
+    Column("category_id", ForeignKey("product_categories.id", ondelete="CASCADE"), primary_key=True),
+)
 
 
 # ── 1. Base Schema (shared fields) ──
@@ -74,42 +91,83 @@ class ProductBase(SQLModel):
     name: str = Field(min_length=1, max_length=255)
     description: str | None = Field(default=None, max_length=255)
     price: float = Field(default=0, ge=0)
+    cost: float = Field(default=0, ge=0)
+    vat_sale: float = Field(default=0, ge=0, description="VAT bán ra (%)")
+    vat_purchase: float = Field(default=0, ge=0, description="VAT mua vào (%)")
+
+    # ★ Enum field: dùng SaEnum + Literal
+    type: Literal["consu", "service", "combo"] = Field(
+        default="consu",
+        sa_column=Column(
+            SaEnum("consu", "service", "combo", name="producttype"), nullable=False
+        ),
+    )
+
+    # FK đơn giản
+    uom_id: uuid.UUID | None = Field(default=None, foreign_key="uoms.id")
+
+    # Boolean flags
+    is_purchase: bool = Field(default=False)
+    is_sale: bool = Field(default=True)
+    is_manufacture: bool = Field(default=False)
+    is_storable: bool = Field(default=False)
+    is_archived: bool = Field(default=False)
 
 
-# ── 2. Create Schema (nhận từ API khi tạo) ──
+# ── 2. Create Schema ──
 class ProductCreate(ProductBase):
-    pass
+    # ★ N-N: Nhận list UUID từ frontend
+    category_ids: list[uuid.UUID] = Field(default_factory=list)
+    uom_ids: list[uuid.UUID] = Field(default_factory=list)
 
 
 # ── 3. Update Schema (TẤT CẢ field optional) ──
-class ProductUpdate(ProductBase):
-    name: str | None = Field(default=None, min_length=1, max_length=255)  # type: ignore
-    price: float | None = Field(default=None, ge=0)  # type: ignore
+# ★ KHÔNG kế thừa Base, kế thừa SQLModel trực tiếp
+class ProductUpdate(SQLModel):
+    name: str | None = Field(default=None, min_length=1, max_length=255)
+    price: float | None = Field(default=None, ge=0)
+    cost: float | None = Field(default=None, ge=0)
+    vat_sale: float | None = Field(default=None, ge=0)
+    vat_purchase: float | None = Field(default=None, ge=0)
+    type: Literal["consu", "service", "combo"] | None = Field(default=None)
+    is_purchase: bool | None = Field(default=None)
+    is_sale: bool | None = Field(default=None)
+    is_manufacture: bool | None = Field(default=None)
+    is_storable: bool | None = Field(default=None)
+    is_archived: bool | None = Field(default=None)
+    # ★ N-N fields (cập nhật quan hệ)
+    category_ids: list[uuid.UUID] | None = Field(default=None)
+    uom_ids: list[uuid.UUID] | None = Field(default=None)
 
 
 # ── 4. Database Model (table=True) ──
 class Product(ProductBase, table=True):
+    __tablename__ = "products"  # ★ Luôn khai báo tường minh
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     created_at: datetime | None = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # type: ignore
     )
-    # FK đến User — copy pattern từ Item
-    owner_id: uuid.UUID = Field(
-        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+
+    # ★ Relationship 1-N: eager load với selectin
+    uom: "Uom" = Relationship(sa_relationship_kwargs={"lazy": "selectin"})
+
+    # ★ Relationship N-N: dùng sa_relationship với secondary
+    categories: list["ProductCategory"] = Relationship(
+        sa_relationship=sa_relationship(
+            "ProductCategory", secondary=product_category_link, lazy="selectin",
+        )
     )
-    # Relationship: KHÔNG cần thêm reverse vào User nếu không dùng navigation
-    # Nếu cần, thêm: owner: User | None = Relationship(back_populates="products")
 
 
 # ── 5. Public Schema (trả về qua API) ──
 class ProductPublic(ProductBase):
-    model_config = ConfigDict(from_attributes=True)  # Cho phép lồng object từ ORM
+    model_config = ConfigDict(from_attributes=True)  # ★ BẮT BUỘC cho nested objects
     id: uuid.UUID
-    owner_id: uuid.UUID
     created_at: datetime | None = None
-    # Lồng object liên quan (ví dụ: thông tin owner)
-    # owner: UserPublic | None = None 
+    # ★ Luôn include nested objects thay vì chỉ trả ID
+    uom: UomPublic | None = None
+    categories: list[CategoryInProduct] = []
 
 
 # ── 6. List Schema (phân trang) ──
@@ -118,11 +176,10 @@ class ProductsPublic(SQLModel):
     count: int
 
 
-# ── 7. Advanced: Self-referencing Relationship (Vídụ UOM) ──
-# Nếu một bản ghi trỏ tới bản ghi khác cùng bảng (cha-con):
+# ── 7. Advanced: Self-referencing Relationship (Ví dụ Category) ──
 # class Category(SQLModel, table=True):
 #     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-#     parent_id: uuid.UUID | None = Field(default=None, foreign_key="category.id")
+#     parent_id: uuid.UUID | None = Field(default=None, foreign_key="product_categories.id")
 #     parent: Optional["Category"] = Relationship(
 #         sa_relationship=relationship("Category", remote_side="Category.id")
 #     )
@@ -130,12 +187,18 @@ class ProductsPublic(SQLModel):
 
 ### Quy tắc:
 - `Base` → chứa field chung + validation
-- `Create` → kế thừa Base, thêm field bắt buộc khi tạo
-- `Update` → override TẤT CẢ required fields thành `Optional` + `# type: ignore`
-- DB Model → **phải** có `id` (uuid), nên có `created_at`
+- `Create` → kế thừa Base, thêm field bắt buộc khi tạo. **Thêm `_ids` fields cho N-N.**
+- `Update` → **KHÔNG kế thừa Base**, kế thừa `SQLModel` trực tiếp, tất cả fields optional.
+- DB Model → **phải** có `id` (uuid), nên có `created_at`, **khai báo `__tablename__`**
 - `Public` → phải include `id`, và thêm các field `Relationship` nếu muốn trả về object lồng nhau.
 - **Quan trọng:** `Public` schema cần `model_config = ConfigDict(from_attributes=True)` để Pydantic có thể đọc dữ liệu từ SQLModel relationship.
+- **Quan trọng:** Import `ConfigDict` từ `pydantic`, KHÔNG từ `sqlmodel`.
 - Import `Message` từ `app.models` khi cần (shared schema)
+
+### ★ Bài học thực tế:
+- **Enum field**: Dùng `Literal[...] + SaEnum(...)`. Sau khi thêm giá trị Enum mới, phải viết Alembic migration thủ công để ALTER TYPE trong PostgreSQL (autogenerate không detect được Enum changes).
+- **N-N Relationship**: Frontend gửi `_ids: list[uuid.UUID]`. CRUD phải xử lý sync junction table (xóa cũ, thêm mới).
+- **Circular import**: Dùng `TYPE_CHECKING` guard khi 2 module import nhau.
 
 ---
 
@@ -233,6 +296,23 @@ def delete_product(session: Session, product: Product) -> None:
     """Xoá Product."""
     session.delete(product)
     session.commit()
+
+
+# ── ★ SYNC N-N RELATIONSHIP ──
+# Khi Create hoặc Update có `_ids` fields, cần sync junction table:
+
+def sync_product_categories(
+    session: Session, product: Product, category_ids: list[uuid.UUID]
+) -> None:
+    """Đồng bộ quan hệ N-N giữa Product và Category."""
+    from app.modules.product_category.models import ProductCategory
+    categories = session.exec(
+        select(ProductCategory).where(col(ProductCategory.id).in_(category_ids))
+    ).all()
+    product.categories = list(categories)
+    session.add(product)
+    session.commit()
+    session.refresh(product)
 ```
 
 ### Pattern chung cho mọi `crud.py`:
@@ -617,3 +697,18 @@ docker compose up -d --build
 # Swagger UI
 open http://localhost:8000/docs
 ```
+
+---
+
+## ★ Checklist trước khi hoàn tất
+
+- [ ] Tất cả field trong Backend model đều có UI tương ứng trong Frontend (Add + Edit form)
+- [ ] `Public` schema có `ConfigDict(from_attributes=True)` và include nested objects
+- [ ] `Update` schema kế thừa `SQLModel` (không phải Base), tất cả fields optional
+- [ ] N-N relationship có junction table + sync function trong CRUD
+- [ ] Enum fields dùng `Literal + SaEnum` pattern
+- [ ] Alembic migration đã được tạo và chạy thành công
+- [ ] Router đã đăng ký trong `api/main.py`
+- [ ] Model đã import trong `alembic/env.py`
+- [ ] Generate client SDK: `bash ./scripts/generate-client.sh`
+- [ ] Frontend build thành công (không có unused imports hay type mismatch)

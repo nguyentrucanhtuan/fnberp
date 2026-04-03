@@ -23,6 +23,12 @@ from app.models import SQLModel  # noqa
 from app.modules.uom import models as uom_models  # noqa
 from app.modules.product_category import models as product_category_models  # noqa
 from app.modules.product import models as product_models  # noqa
+from app.modules.warehouse import models as warehouse_models  # noqa
+from app.modules.payment_method import models as payment_method_models  # noqa
+from app.modules.pos import models as pos_models  # noqa
+from app.modules.printer import models as printer_models  # noqa
+from app.modules.order_type import models as order_type_models  # noqa
+from app.modules.kitchen_screen import models as kitchen_screen_models  # noqa
 from app.core.config import settings # noqa
 
 target_metadata = SQLModel.metadata

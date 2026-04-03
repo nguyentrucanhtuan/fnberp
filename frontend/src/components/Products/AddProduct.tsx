@@ -84,8 +84,14 @@ const AddProduct = () => {
   const categories = categoriesData?.data || []
 
   // Chuẩn bị options cho MultiSelect
-  const uomOptions = uoms.map((u) => ({ label: `${u.name} (${u.code})`, value: u.id }))
-  const categoryOptions = categories.map((c) => ({ label: c.name, value: c.id }))
+  const uomOptions = uoms.map((u) => ({
+    label: `${u.name} (${u.code})`,
+    value: u.id,
+  }))
+  const categoryOptions = categories.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }))
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema) as any,
@@ -141,13 +147,16 @@ const AddProduct = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit as any)}
+            className="space-y-4"
+          >
             <Tabs defaultValue="basic" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="basic">Thông tin chính</TabsTrigger>
                 <TabsTrigger value="finance">Tài chính & Quản lý</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="basic" className="space-y-4 pt-4">
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -185,7 +194,10 @@ const AddProduct = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Loại sản phẩm</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Chọn loại" />
@@ -207,7 +219,10 @@ const AddProduct = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Đơn vị tính chính</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Chọn đơn vị chính" />
@@ -245,7 +260,7 @@ const AddProduct = () => {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control as any}
                   name="category_ids"
@@ -403,7 +418,11 @@ const AddProduct = () => {
             </Tabs>
 
             <DialogFooter className="pt-4 gap-2">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
                 Hủy
               </Button>
               <LoadingButton

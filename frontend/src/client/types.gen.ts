@@ -9,6 +9,11 @@ export type Body_login_login_access_token = {
     client_secret?: (string | null);
 };
 
+export type CategoryInKitchenScreen = {
+    id: string;
+    name: string;
+};
+
 /**
  * Schema nhẹ cho category khi lồng trong Product response.
  */
@@ -45,6 +50,56 @@ export type ItemUpdate = {
     description?: (string | null);
 };
 
+export type KitchenScreenCreate = {
+    /**
+     * Tên màn hình nhà bếp
+     */
+    name: string;
+    /**
+     * POS áp dụng
+     */
+    pos_id: string;
+    /**
+     * Trạng thái hoạt động
+     */
+    is_active?: boolean;
+    /**
+     * Danh mục áp dụng
+     */
+    category_ids?: Array<(string)>;
+};
+
+export type KitchenScreenPublic = {
+    /**
+     * Tên màn hình nhà bếp
+     */
+    name: string;
+    /**
+     * POS áp dụng
+     */
+    pos_id: string;
+    /**
+     * Trạng thái hoạt động
+     */
+    is_active?: boolean;
+    id: string;
+    created_at?: (string | null);
+    pos?: (PosInKitchenScreen | null);
+    categories?: Array<CategoryInKitchenScreen>;
+};
+
+export type KitchenScreensPublic = {
+    data: Array<KitchenScreenPublic>;
+    count: number;
+};
+
+export type KitchenScreenUpdate = {
+    name?: (string | null);
+    pos_id?: (string | null);
+    is_active?: (boolean | null);
+    category_ids?: (Array<(string)> | null);
+};
+
 export type Message = {
     message: string;
 };
@@ -52,6 +107,215 @@ export type Message = {
 export type NewPassword = {
     token: string;
     new_password: string;
+};
+
+export type OrderTypeCreate = {
+    /**
+     * Tên loại đơn hàng (Ví dụ: Mang đi, Tại chỗ, Grab...)
+     */
+    name: string;
+    /**
+     * Trạng thái hoạt động
+     */
+    is_active?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type OrderTypePublic = {
+    /**
+     * Tên loại đơn hàng (Ví dụ: Mang đi, Tại chỗ, Grab...)
+     */
+    name: string;
+    /**
+     * Trạng thái hoạt động
+     */
+    is_active?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+};
+
+export type OrderTypesPublic = {
+    data: Array<OrderTypePublic>;
+    count: number;
+};
+
+export type OrderTypeUpdate = {
+    name?: (string | null);
+    is_active?: (boolean | null);
+    is_archived?: (boolean | null);
+};
+
+export type PaymentMethodCreate = {
+    /**
+     * Tên phương thức thanh toán
+     */
+    name: string;
+    /**
+     * Mã phương thức thanh toán
+     */
+    code: string;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type PaymentMethodInPos = {
+    id: string;
+    name: string;
+    code: string;
+};
+
+export type PaymentMethodPublic = {
+    /**
+     * Tên phương thức thanh toán
+     */
+    name: string;
+    /**
+     * Mã phương thức thanh toán
+     */
+    code: string;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+};
+
+export type PaymentMethodsPublic = {
+    data: Array<PaymentMethodPublic>;
+    count: number;
+};
+
+export type PaymentMethodUpdate = {
+    name?: (string | null);
+    code?: (string | null);
+    is_archived?: (boolean | null);
+};
+
+export type PosCreate = {
+    /**
+     * Tên quầy bán hàng
+     */
+    name: string;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    payment_method_ids?: Array<(string)>;
+};
+
+export type PosInKitchenScreen = {
+    id: string;
+    name: string;
+};
+
+export type PosPublic = {
+    /**
+     * Tên quầy bán hàng
+     */
+    name: string;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+    payment_methods?: Array<PaymentMethodInPos>;
+};
+
+export type PossPublic = {
+    data: Array<PosPublic>;
+    count: number;
+};
+
+export type PosUpdate = {
+    name?: (string | null);
+    is_archived?: (boolean | null);
+    payment_method_ids?: (Array<(string)> | null);
+};
+
+export type PrinterCreate = {
+    /**
+     * Tên thiết bị máy in
+     */
+    name: string;
+    /**
+     * Địa chỉ IP máy in
+     */
+    ip: string;
+    /**
+     * Cổng kết nối
+     */
+    port?: number;
+    /**
+     * Loại máy in
+     */
+    printer_type?: 'invoice' | 'label' | 'kitchen_order_ticket';
+    /**
+     * Máy in đang hoạt động
+     */
+    is_active?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+/**
+ * Loại máy in
+ */
+export type printer_type = 'invoice' | 'label' | 'kitchen_order_ticket';
+
+export type PrinterPublic = {
+    /**
+     * Tên thiết bị máy in
+     */
+    name: string;
+    /**
+     * Địa chỉ IP máy in
+     */
+    ip: string;
+    /**
+     * Cổng kết nối
+     */
+    port?: number;
+    /**
+     * Loại máy in
+     */
+    printer_type?: 'invoice' | 'label' | 'kitchen_order_ticket';
+    /**
+     * Máy in đang hoạt động
+     */
+    is_active?: boolean;
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+};
+
+export type PrintersPublic = {
+    data: Array<PrinterPublic>;
+    count: number;
+};
+
+export type PrinterUpdate = {
+    name?: (string | null);
+    ip?: (string | null);
+    port?: (number | null);
+    printer_type?: ('invoice' | 'label' | 'kitchen_order_ticket' | null);
+    is_active?: (boolean | null);
+    is_archived?: (boolean | null);
 };
 
 export type PrivateUserCreate = {
@@ -440,6 +704,58 @@ export type ValidationError = {
     };
 };
 
+export type WarehouseCreate = {
+    /**
+     * Mã kho (VD: KHO01, WH-HCM)
+     */
+    code: string;
+    /**
+     * Tên kho
+     */
+    name: string;
+    /**
+     * Địa chỉ kho
+     */
+    address?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+};
+
+export type WarehousePublic = {
+    /**
+     * Mã kho (VD: KHO01, WH-HCM)
+     */
+    code: string;
+    /**
+     * Tên kho
+     */
+    name: string;
+    /**
+     * Địa chỉ kho
+     */
+    address?: (string | null);
+    /**
+     * Lưu trữ
+     */
+    is_archived?: boolean;
+    id: string;
+    created_at?: (string | null);
+};
+
+export type WarehousesPublic = {
+    data: Array<WarehousePublic>;
+    count: number;
+};
+
+export type WarehouseUpdate = {
+    code?: (string | null);
+    name?: (string | null);
+    address?: (string | null);
+    is_archived?: (boolean | null);
+};
+
 export type ItemsReadItemsData = {
     limit?: number;
     skip?: number;
@@ -472,6 +788,38 @@ export type ItemsDeleteItemData = {
 
 export type ItemsDeleteItemResponse = (Message);
 
+export type KitchenScreensReadScreensData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type KitchenScreensReadScreensResponse = (KitchenScreensPublic);
+
+export type KitchenScreensCreateScreenData = {
+    requestBody: KitchenScreenCreate;
+};
+
+export type KitchenScreensCreateScreenResponse = (KitchenScreenPublic);
+
+export type KitchenScreensReadScreenData = {
+    id: string;
+};
+
+export type KitchenScreensReadScreenResponse = (KitchenScreenPublic);
+
+export type KitchenScreensUpdateScreenData = {
+    id: string;
+    requestBody: KitchenScreenUpdate;
+};
+
+export type KitchenScreensUpdateScreenResponse = (KitchenScreenPublic);
+
+export type KitchenScreensDeleteScreenData = {
+    id: string;
+};
+
+export type KitchenScreensDeleteScreenResponse = (Message);
+
 export type LoginLoginAccessTokenData = {
     formData: Body_login_login_access_token;
 };
@@ -497,6 +845,137 @@ export type LoginRecoverPasswordHtmlContentData = {
 };
 
 export type LoginRecoverPasswordHtmlContentResponse = (string);
+
+export type OrderTypesReadOrderTypesData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type OrderTypesReadOrderTypesResponse = (OrderTypesPublic);
+
+export type OrderTypesCreateOrderTypeData = {
+    requestBody: OrderTypeCreate;
+};
+
+export type OrderTypesCreateOrderTypeResponse = (OrderTypePublic);
+
+export type OrderTypesReadOrderTypeData = {
+    id: string;
+};
+
+export type OrderTypesReadOrderTypeResponse = (OrderTypePublic);
+
+export type OrderTypesUpdateOrderTypeData = {
+    id: string;
+    requestBody: OrderTypeUpdate;
+};
+
+export type OrderTypesUpdateOrderTypeResponse = (OrderTypePublic);
+
+export type OrderTypesDeleteOrderTypeData = {
+    id: string;
+};
+
+export type OrderTypesDeleteOrderTypeResponse = (Message);
+
+export type PaymentMethodsReadPaymentMethodsData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type PaymentMethodsReadPaymentMethodsResponse = (PaymentMethodsPublic);
+
+export type PaymentMethodsCreatePaymentMethodData = {
+    requestBody: PaymentMethodCreate;
+};
+
+export type PaymentMethodsCreatePaymentMethodResponse = (PaymentMethodPublic);
+
+export type PaymentMethodsReadPaymentMethodData = {
+    id: string;
+};
+
+export type PaymentMethodsReadPaymentMethodResponse = (PaymentMethodPublic);
+
+export type PaymentMethodsUpdatePaymentMethodData = {
+    id: string;
+    requestBody: PaymentMethodUpdate;
+};
+
+export type PaymentMethodsUpdatePaymentMethodResponse = (PaymentMethodPublic);
+
+export type PaymentMethodsDeletePaymentMethodData = {
+    id: string;
+};
+
+export type PaymentMethodsDeletePaymentMethodResponse = (Message);
+
+export type PosReadPossData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type PosReadPossResponse = (PossPublic);
+
+export type PosCreatePosData = {
+    requestBody: PosCreate;
+};
+
+export type PosCreatePosResponse = (PosPublic);
+
+export type PosReadPosData = {
+    id: string;
+};
+
+export type PosReadPosResponse = (PosPublic);
+
+export type PosUpdatePosData = {
+    id: string;
+    requestBody: PosUpdate;
+};
+
+export type PosUpdatePosResponse = (PosPublic);
+
+export type PosDeletePosData = {
+    id: string;
+};
+
+export type PosDeletePosResponse = (Message);
+
+export type PrintersReadPrintersData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type PrintersReadPrintersResponse = (PrintersPublic);
+
+export type PrintersCreatePrinterData = {
+    requestBody: PrinterCreate;
+};
+
+export type PrintersCreatePrinterResponse = (PrinterPublic);
+
+export type PrintersReadPrinterData = {
+    id: string;
+};
+
+export type PrintersReadPrinterResponse = (PrinterPublic);
+
+export type PrintersUpdatePrinterData = {
+    id: string;
+    requestBody: PrinterUpdate;
+};
+
+export type PrintersUpdatePrinterResponse = (PrinterPublic);
+
+export type PrintersDeletePrinterData = {
+    id: string;
+};
+
+export type PrintersDeletePrinterResponse = (Message);
 
 export type PrivateCreateUserData = {
     requestBody: PrivateUserCreate;
@@ -664,3 +1143,36 @@ export type UtilsTestEmailData = {
 export type UtilsTestEmailResponse = (Message);
 
 export type UtilsHealthCheckResponse = (boolean);
+
+export type WarehousesReadWarehousesData = {
+    includeArchived?: boolean;
+    limit?: number;
+    skip?: number;
+};
+
+export type WarehousesReadWarehousesResponse = (WarehousesPublic);
+
+export type WarehousesCreateWarehouseData = {
+    requestBody: WarehouseCreate;
+};
+
+export type WarehousesCreateWarehouseResponse = (WarehousePublic);
+
+export type WarehousesReadWarehouseData = {
+    id: string;
+};
+
+export type WarehousesReadWarehouseResponse = (WarehousePublic);
+
+export type WarehousesUpdateWarehouseData = {
+    id: string;
+    requestBody: WarehouseUpdate;
+};
+
+export type WarehousesUpdateWarehouseResponse = (WarehousePublic);
+
+export type WarehousesDeleteWarehouseData = {
+    id: string;
+};
+
+export type WarehousesDeleteWarehouseResponse = (Message);

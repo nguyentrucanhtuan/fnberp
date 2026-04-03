@@ -7,8 +7,8 @@ import { z } from "zod"
 import {
   ProductCategoriesService,
   type ProductPublic,
-  type ProductUpdate,
   ProductsService,
+  type ProductUpdate,
   UomsService,
 } from "@/client"
 import { Button } from "@/components/ui/button"
@@ -88,8 +88,14 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
   const categories = categoriesData?.data || []
 
   // Chuẩn bị options cho MultiSelect
-  const uomOptions = uoms.map((u) => ({ label: `${u.name} (${u.code})`, value: u.id }))
-  const categoryOptions = categories.map((c) => ({ label: c.name, value: c.id }))
+  const uomOptions = uoms.map((u) => ({
+    label: `${u.name} (${u.code})`,
+    value: u.id,
+  }))
+  const categoryOptions = categories.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }))
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema) as any,
@@ -138,13 +144,16 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit as any)}
+            className="space-y-4"
+          >
             <Tabs defaultValue="basic" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="basic">Thông tin chính</TabsTrigger>
                 <TabsTrigger value="finance">Tài chính & Quản lý</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="basic" className="space-y-4 pt-4">
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -182,7 +191,10 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Loại sản phẩm</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Chọn loại" />
@@ -204,7 +216,10 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Đơn vị tính chính</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Chọn đơn vị chính" />
@@ -242,7 +257,7 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control as any}
                   name="category_ids"
@@ -397,7 +412,11 @@ const EditProduct = ({ product, isOpen, setIsOpen }: EditProductProps) => {
             </Tabs>
 
             <DialogFooter className="pt-4 gap-2">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
                 Hủy
               </Button>
               <LoadingButton

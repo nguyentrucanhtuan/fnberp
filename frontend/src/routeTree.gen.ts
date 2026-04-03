@@ -15,10 +15,16 @@ import { Route as RecoverPasswordRouteImport } from './routes/recover-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutWarehousesRouteImport } from './routes/_layout/warehouses'
 import { Route as LayoutUomsRouteImport } from './routes/_layout/uoms'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
 import { Route as LayoutProductCategoriesRouteImport } from './routes/_layout/product-categories'
+import { Route as LayoutPrintersRouteImport } from './routes/_layout/printers'
+import { Route as LayoutPosRouteImport } from './routes/_layout/pos'
+import { Route as LayoutPaymentMethodsRouteImport } from './routes/_layout/payment-methods'
+import { Route as LayoutOrderTypesRouteImport } from './routes/_layout/order-types'
+import { Route as LayoutKitchenScreensRouteImport } from './routes/_layout/kitchen-screens'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 
@@ -51,6 +57,11 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutWarehousesRoute = LayoutWarehousesRouteImport.update({
+  id: '/warehouses',
+  path: '/warehouses',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutUomsRoute = LayoutUomsRouteImport.update({
   id: '/uoms',
   path: '/uoms',
@@ -69,6 +80,31 @@ const LayoutProductsRoute = LayoutProductsRouteImport.update({
 const LayoutProductCategoriesRoute = LayoutProductCategoriesRouteImport.update({
   id: '/product-categories',
   path: '/product-categories',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutPrintersRoute = LayoutPrintersRouteImport.update({
+  id: '/printers',
+  path: '/printers',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutPosRoute = LayoutPosRouteImport.update({
+  id: '/pos',
+  path: '/pos',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutPaymentMethodsRoute = LayoutPaymentMethodsRouteImport.update({
+  id: '/payment-methods',
+  path: '/payment-methods',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutOrderTypesRoute = LayoutOrderTypesRouteImport.update({
+  id: '/order-types',
+  path: '/order-types',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutKitchenScreensRoute = LayoutKitchenScreensRouteImport.update({
+  id: '/kitchen-screens',
+  path: '/kitchen-screens',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
@@ -90,10 +126,16 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/items': typeof LayoutItemsRoute
+  '/kitchen-screens': typeof LayoutKitchenScreensRoute
+  '/order-types': typeof LayoutOrderTypesRoute
+  '/payment-methods': typeof LayoutPaymentMethodsRoute
+  '/pos': typeof LayoutPosRoute
+  '/printers': typeof LayoutPrintersRoute
   '/product-categories': typeof LayoutProductCategoriesRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
   '/uoms': typeof LayoutUomsRoute
+  '/warehouses': typeof LayoutWarehousesRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -102,10 +144,16 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/items': typeof LayoutItemsRoute
+  '/kitchen-screens': typeof LayoutKitchenScreensRoute
+  '/order-types': typeof LayoutOrderTypesRoute
+  '/payment-methods': typeof LayoutPaymentMethodsRoute
+  '/pos': typeof LayoutPosRoute
+  '/printers': typeof LayoutPrintersRoute
   '/product-categories': typeof LayoutProductCategoriesRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
   '/uoms': typeof LayoutUomsRoute
+  '/warehouses': typeof LayoutWarehousesRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -117,10 +165,16 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/items': typeof LayoutItemsRoute
+  '/_layout/kitchen-screens': typeof LayoutKitchenScreensRoute
+  '/_layout/order-types': typeof LayoutOrderTypesRoute
+  '/_layout/payment-methods': typeof LayoutPaymentMethodsRoute
+  '/_layout/pos': typeof LayoutPosRoute
+  '/_layout/printers': typeof LayoutPrintersRoute
   '/_layout/product-categories': typeof LayoutProductCategoriesRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/uoms': typeof LayoutUomsRoute
+  '/_layout/warehouses': typeof LayoutWarehousesRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
@@ -133,10 +187,16 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/items'
+    | '/kitchen-screens'
+    | '/order-types'
+    | '/payment-methods'
+    | '/pos'
+    | '/printers'
     | '/product-categories'
     | '/products'
     | '/settings'
     | '/uoms'
+    | '/warehouses'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -145,10 +205,16 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/items'
+    | '/kitchen-screens'
+    | '/order-types'
+    | '/payment-methods'
+    | '/pos'
+    | '/printers'
     | '/product-categories'
     | '/products'
     | '/settings'
     | '/uoms'
+    | '/warehouses'
     | '/'
   id:
     | '__root__'
@@ -159,10 +225,16 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_layout/admin'
     | '/_layout/items'
+    | '/_layout/kitchen-screens'
+    | '/_layout/order-types'
+    | '/_layout/payment-methods'
+    | '/_layout/pos'
+    | '/_layout/printers'
     | '/_layout/product-categories'
     | '/_layout/products'
     | '/_layout/settings'
     | '/_layout/uoms'
+    | '/_layout/warehouses'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -218,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/warehouses': {
+      id: '/_layout/warehouses'
+      path: '/warehouses'
+      fullPath: '/warehouses'
+      preLoaderRoute: typeof LayoutWarehousesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/uoms': {
       id: '/_layout/uoms'
       path: '/uoms'
@@ -246,6 +325,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProductCategoriesRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/printers': {
+      id: '/_layout/printers'
+      path: '/printers'
+      fullPath: '/printers'
+      preLoaderRoute: typeof LayoutPrintersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pos': {
+      id: '/_layout/pos'
+      path: '/pos'
+      fullPath: '/pos'
+      preLoaderRoute: typeof LayoutPosRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/payment-methods': {
+      id: '/_layout/payment-methods'
+      path: '/payment-methods'
+      fullPath: '/payment-methods'
+      preLoaderRoute: typeof LayoutPaymentMethodsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/order-types': {
+      id: '/_layout/order-types'
+      path: '/order-types'
+      fullPath: '/order-types'
+      preLoaderRoute: typeof LayoutOrderTypesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/kitchen-screens': {
+      id: '/_layout/kitchen-screens'
+      path: '/kitchen-screens'
+      fullPath: '/kitchen-screens'
+      preLoaderRoute: typeof LayoutKitchenScreensRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
@@ -266,20 +380,32 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
+  LayoutKitchenScreensRoute: typeof LayoutKitchenScreensRoute
+  LayoutOrderTypesRoute: typeof LayoutOrderTypesRoute
+  LayoutPaymentMethodsRoute: typeof LayoutPaymentMethodsRoute
+  LayoutPosRoute: typeof LayoutPosRoute
+  LayoutPrintersRoute: typeof LayoutPrintersRoute
   LayoutProductCategoriesRoute: typeof LayoutProductCategoriesRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutUomsRoute: typeof LayoutUomsRoute
+  LayoutWarehousesRoute: typeof LayoutWarehousesRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutItemsRoute: LayoutItemsRoute,
+  LayoutKitchenScreensRoute: LayoutKitchenScreensRoute,
+  LayoutOrderTypesRoute: LayoutOrderTypesRoute,
+  LayoutPaymentMethodsRoute: LayoutPaymentMethodsRoute,
+  LayoutPosRoute: LayoutPosRoute,
+  LayoutPrintersRoute: LayoutPrintersRoute,
   LayoutProductCategoriesRoute: LayoutProductCategoriesRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutUomsRoute: LayoutUomsRoute,
+  LayoutWarehousesRoute: LayoutWarehousesRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 

@@ -1,4 +1,16 @@
-import { Home, Package, Ruler, Tag, Users } from "lucide-react"
+import {
+  ClipboardList,
+  CreditCard,
+  Home,
+  Monitor,
+  Package,
+  Printer,
+  Ruler,
+  ShoppingCart,
+  Tag,
+  Users,
+  Warehouse,
+} from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
@@ -9,22 +21,50 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar"
 import useAuth from "@/hooks/useAuth"
-import { type Item, Main } from "./Main"
+import { type ItemGroup, Main } from "./Main"
 import { User } from "./User"
 
-const baseItems: Item[] = [
-  { icon: Home, title: "Tổng quan", path: "/" },
-  { icon: Ruler, title: "Đơn vị tính", path: "/uoms" },
-  { icon: Tag, title: "Danh mục", path: "/product-categories" },
-  { icon: Package, title: "Sản phẩm", path: "/products" },
+const baseGroups: ItemGroup[] = [
+  {
+    label: "TỔNG QUAN",
+    items: [{ icon: Home, title: "Dashboard", path: "/" }],
+  },
+  {
+    label: "QUẢN LÝ KHO",
+    items: [
+      { icon: Ruler, title: "Đơn vị tính", path: "/uoms" },
+      { icon: Tag, title: "Danh mục", path: "/product-categories" },
+      { icon: Package, title: "Sản phẩm", path: "/products" },
+      { icon: Warehouse, title: "Kho hàng", path: "/warehouses" },
+    ],
+  },
+  {
+    label: "BÁN HÀNG",
+    items: [
+      { icon: ShoppingCart, title: "Quầy bán hàng", path: "/pos" },
+      { icon: ClipboardList, title: "Loại đơn hàng", path: "/order-types" },
+      {
+        icon: CreditCard,
+        title: "Phương thức thanh toán",
+        path: "/payment-methods",
+      },
+      { icon: Printer, title: "Máy in", path: "/printers" },
+      { icon: Monitor, title: "Màn hình nhà bếp", path: "/kitchen-screens" },
+    ],
+  },
 ]
+
+const adminGroup: ItemGroup = {
+  label: "HỆ THỐNG",
+  items: [{ icon: Users, title: "Quản trị", path: "/admin" }],
+}
 
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
 
-  const items = currentUser?.is_superuser
-    ? [...baseItems, { icon: Users, title: "Admin", path: "/admin" }]
-    : baseItems
+  const groups = currentUser?.is_superuser
+    ? [...baseGroups, adminGroup]
+    : baseGroups
 
   return (
     <Sidebar collapsible="icon">
@@ -32,7 +72,7 @@ export function AppSidebar() {
         <Logo variant="responsive" />
       </SidebarHeader>
       <SidebarContent>
-        <Main items={items} />
+        <Main groups={groups} />
       </SidebarContent>
       <SidebarFooter>
         <SidebarAppearance />
